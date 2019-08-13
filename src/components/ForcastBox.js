@@ -56,15 +56,22 @@ const ForcastBox = () => {
     );
   });
 
-  console.log(weatherImg[0])
+  // console.log(weatherImg[0])
   let background = ''
+  let a = ''
   for (let i = 0; i < weatherImg.length; i++) {
+    // console.log(weatherImg[i].main)
     background = weatherImg[i][0].main
+    // a = weatherImg[i]
   }
+  // for (let i = 0; i < a.length; i++) {
+  //   a = a.main
+  // }
 
   console.log(background)
   switch (background) {
     case "Clear":
+    // background = "https://player.vimeo.com/external/205660397.sd.mp4?s=472e9b75fc1b0b11a211cf206b61de36f85817df&profile_id=164&oauth2_token_id=57447761"
     background = 'url(https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif)'
     break;
     case "Thunderstorm":
@@ -73,27 +80,29 @@ const ForcastBox = () => {
       background = 'url(https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif)'
     break;
     case "Clouds":
-      background = 'url(https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif)'
+      // background = 'url(https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif)'
     break;
     case "Snow":
-      background = 'url(https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif)'
+      // background = 'url(https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif)'
       break;
       default:
-        background = 'url(https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif)'
+        background = 'https://player.vimeo.com/external/205660397.sd.mp4?s=472e9b75fc1b0b11a211cf206b61de36f85817df&profile_id=164&oauth2_token_id=57447761'
       break;
   }
-
+console.log(background)
   let styles = {
     clearVid: {
       backgroundImage: `${background}`,
-      zIndex: '-1'
+      zIndex: '-1',
+      height: '100vh',
+      width: '90vw'
   }
   }
 
   return (
     <div style={styles.clearVid} className="forcast-container">
-      {/* <video>
-        <source  src="" type="" />
+      {/* <video style={{height: "100%", width: '100vw', zIndex: '99'}} autoPlay>
+        <source src={background} type="video/mp4" />
       </video> */}
       <h1>
         {city} {country}
