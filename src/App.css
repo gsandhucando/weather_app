@@ -7,3 +7,18 @@
 .App {
   text-align: center;
 }
+
+.forcast-box {
+  display: flex;
+  /* height: 100px; */
+}
+
+.day-forcast {
+  cursor: pointer;
+}
+
+.detailed-day {
+  background: rgba(0,0,0,.8);
+  height: auto;
+  width: auto;
+}
