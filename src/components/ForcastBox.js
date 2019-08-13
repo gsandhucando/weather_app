@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import env from "../env.json";
 import DayForcast from "./DayForcast";
-import DetailedDay from "./DetailedDay";
+// import DetailedDay from "./DetailedDay";
 
 let key = env.WEATHER_API;
 
@@ -11,11 +11,12 @@ const ForcastBox = () => {
   let [city, setCity] = useState("");
   let [country, setcountry] = useState("");
   let [weatherImg, setWeatherImg] = useState([]);
+  let [inputCity, setInputCity] =useState('san francisco')
 
   useEffect(() => {
     axios
       .get(
-        `http://api.openweathermap.org/data/2.5/forecast?q=san francisco,us&units=imperial&APPID=${key}`
+        `http://api.openweathermap.org/data/2.5/forecast?q=${inputCity},us&units=imperial&APPID=${key}`
       )
       .then(response => {
         // console.log(response.data);
@@ -29,6 +30,22 @@ const ForcastBox = () => {
         );
       });
   }, []);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    axios.get(`http://api.openweathermap.org/data/2.5/forecast?q=${inputCity},us&units=imperial&APPID=${key}`)
+    .then(response => {
+      // console.log(response.data);
+      setCity(response.data.city.name);
+      setcountry(response.data.city.country);
+      setForcast(response.data.list.slice(0, 7));
+      setWeatherImg(
+        response.data.list.slice(0, 7).map(el => {
+          return el.weather;
+        })
+      );
+    });
+  }
 
   let temp = 0;
 
@@ -54,28 +71,25 @@ const ForcastBox = () => {
         temp={temp}
         weather={weather}
         windSpeed={windSpeed}
+        inputCIty={inputCity}
       />
     );
   });
 
   // console.log(weatherImg[0])
   let background = "";
-  let a = "";
-  for (let i = 0; i < weatherImg.length; i++) {
-    // console.log(weatherImg[i].main)
-    background = weatherImg[i][0].main;
-    // a = weatherImg[i]
-  }
-  // for (let i = 0; i < a.length; i++) {
-  //   a = a.main
-  // }
 
-  console.log(background);
+  for (let i = 0; i < weatherImg.length; i++) {
+    background = weatherImg[i][0].main;
+
+  }
+
+
+  // console.log(background);
   switch (background) {
     case "Clear":
-      // background = "https://player.vimeo.com/external/205660397.sd.mp4?s=472e9b75fc1b0b11a211cf206b61de36f85817df&profile_id=164&oauth2_token_id=57447761"
       background =
-        "url(https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif)";
+        "url(https://media2.giphy.com/media/ivcVZnZAEqhs4/giphy.gif)";
       break;
     case "Thunderstorm":
     case "Drizzle":
@@ -84,28 +98,44 @@ const ForcastBox = () => {
         "url(https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif)";
       break;
     case "Clouds":
-      // background = 'url(https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif)'
+      background = 'url(https://media0.giphy.com/media/KwZoSJlvep6Vy/source.gif)'
       break;
     case "Snow":
-      // background = 'url(https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif)'
+      background = 'url(http://giphygifs.s3.amazonaws.com/media/lMr6k5bqTTioM/giphy.gif)'
       break;
     default:
       background =
-        "https://player.vimeo.com/external/205660397.sd.mp4?s=472e9b75fc1b0b11a211cf206b61de36f85817df&profile_id=164&oauth2_token_id=57447761";
+      "url(https://media2.giphy.com/media/ivcVZnZAEqhs4/giphy.gif)";
       break;
   }
-  console.log(background);
+  // console.log(background);
   let styles = {
     clearVid: {
       backgroundImage: `${background}`,
       zIndex: "-1",
       height: "100vh",
-      width: "90vw"
+      width: "90vw",
+      backgroundRepeat: "repeat",
+      backgroundPosition: "center",
+      backgroundSize: "100% 300px"
     }
   };
 
+
+
+  function inputCItyChange(e) {
+    e.preventDefault()
+    console.log(e.target.value)
+    setInputCity(e.target.value)
+  }
+  console.log(inputCity)
+
   return (
     <div style={styles.clearVid} className="forcast-container">
+      <form onSubmit={handleSubmit}>
+      <input onChange={inputCItyChange} placeholder='Please enter state' />
+      <input type='submit' value="Enter City" />
+      </form>
       {/* <video style={{height: "100%", width: '100vw', zIndex: '99'}} autoPlay>
         <source src={background} type="video/mp4" />
       </video> */}
@@ -114,7 +144,7 @@ const ForcastBox = () => {
       </h1>
       <div className="forcast-box">{mappedDateAndTime}</div>
       <div className="forcast-main-box">
-        <DetailedDay temp={temp} />
+        {/* <DetailedDay temp={temp} inputCIty={inputCIty} /> */}
       </div>
     </div>
   );

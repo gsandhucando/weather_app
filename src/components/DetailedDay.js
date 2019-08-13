@@ -4,13 +4,13 @@ import axios from "axios";
 
 let key = env.WEATHER_API;
 
-const DetailedDay = ({ temp }) => {
+const DetailedDay = ({ temp, inputCIty }) => {
   let [weather, setWeather] = useState([]);
   let [forcast, setForcast] = useState([]);
   useEffect(() => {
     axios
       .get(
-        `http://api.openweathermap.org/data/2.5/forecast?q=san francisco,us&units=imperial&APPID=${key}`
+        `http://api.openweathermap.org/data/2.5/forecast?q=${inputCIty},us&units=imperial&APPID=${key}`
       )
       .then(response => {
         console.log(response.data)
