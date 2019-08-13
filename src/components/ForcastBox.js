@@ -10,7 +10,7 @@ const ForcastBox = () => {
   let [forcast, setForcast] = useState([]);
   let [city, setCity] = useState("");
   let [country, setcountry] = useState("");
-  let [weatherImg, setWeatherImg] = useState([])
+  let [weatherImg, setWeatherImg] = useState([]);
 
   useEffect(() => {
     axios
@@ -22,9 +22,11 @@ const ForcastBox = () => {
         setCity(response.data.city.name);
         setcountry(response.data.city.country);
         setForcast(response.data.list.slice(0, 7));
-        setWeatherImg(response.data.list.slice(0, 7).map(el => {
-          return el.weather
-        }))
+        setWeatherImg(
+          response.data.list.slice(0, 7).map(el => {
+            return el.weather;
+          })
+        );
       });
   }, []);
 
@@ -57,47 +59,50 @@ const ForcastBox = () => {
   });
 
   // console.log(weatherImg[0])
-  let background = ''
-  let a = ''
+  let background = "";
+  let a = "";
   for (let i = 0; i < weatherImg.length; i++) {
     // console.log(weatherImg[i].main)
-    background = weatherImg[i][0].main
+    background = weatherImg[i][0].main;
     // a = weatherImg[i]
   }
   // for (let i = 0; i < a.length; i++) {
   //   a = a.main
   // }
 
-  console.log(background)
+  console.log(background);
   switch (background) {
     case "Clear":
-    // background = "https://player.vimeo.com/external/205660397.sd.mp4?s=472e9b75fc1b0b11a211cf206b61de36f85817df&profile_id=164&oauth2_token_id=57447761"
-    background = 'url(https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif)'
-    break;
+      // background = "https://player.vimeo.com/external/205660397.sd.mp4?s=472e9b75fc1b0b11a211cf206b61de36f85817df&profile_id=164&oauth2_token_id=57447761"
+      background =
+        "url(https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif)";
+      break;
     case "Thunderstorm":
     case "Drizzle":
     case "Rain":
-      background = 'url(https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif)'
-    break;
+      background =
+        "url(https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif)";
+      break;
     case "Clouds":
       // background = 'url(https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif)'
-    break;
+      break;
     case "Snow":
       // background = 'url(https://media.giphy.com/media/t7Qb8655Z1VfBGr5XB/giphy.gif)'
       break;
-      default:
-        background = 'https://player.vimeo.com/external/205660397.sd.mp4?s=472e9b75fc1b0b11a211cf206b61de36f85817df&profile_id=164&oauth2_token_id=57447761'
+    default:
+      background =
+        "https://player.vimeo.com/external/205660397.sd.mp4?s=472e9b75fc1b0b11a211cf206b61de36f85817df&profile_id=164&oauth2_token_id=57447761";
       break;
   }
-console.log(background)
+  console.log(background);
   let styles = {
     clearVid: {
       backgroundImage: `${background}`,
-      zIndex: '-1',
-      height: '100vh',
-      width: '90vw'
-  }
-  }
+      zIndex: "-1",
+      height: "100vh",
+      width: "90vw"
+    }
+  };
 
   return (
     <div style={styles.clearVid} className="forcast-container">
