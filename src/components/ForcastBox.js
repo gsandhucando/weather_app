@@ -13,7 +13,7 @@ const ForcastBox = () => {
   useEffect(() => {
     axios
       .get(
-        `http://api.openweathermap.org/data/2.5/forecast?q=san francisco,us&units=imperial&APPID=${key}`
+        `http://api.openweathermap.org/data/2.5/forecast?q=portland,us&units=imperial&APPID=${key}`
       )
       .then(response => {
         console.log(response.data);
@@ -24,7 +24,7 @@ const ForcastBox = () => {
   }, []);
 
   let mappedDateAndTime = forcast.map((day, i) => {
-    console.log(day.main);
+    // console.log(day);
     let temp = Math.round(day.main.temp);
     let temp_max = Math.round(day.main.temp_max)
     let temp_min = Math.round(day.main.temp_min)
